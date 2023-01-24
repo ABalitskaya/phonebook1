@@ -15,6 +15,7 @@ public class FirstSeleniumTest {
     By emailField = By.cssSelector("[placeholder=\"Email\"]");
     By email2Field = By.cssSelector("[placeholder=\"Email\"]");
     By email3Field = By.cssSelector("[placeholder=\"Email\"]");
+    By email4Field = By.cssSelector("[placeholder=\"Email\"]");
     //before
 
     @BeforeClass
