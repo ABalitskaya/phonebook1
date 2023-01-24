@@ -13,8 +13,8 @@ import java.util.concurrent.TimeUnit;
 public class FirstSeleniumTest {
     WebDriver driver;
     By emailField = By.cssSelector("[placeholder=\"Email\"]");
-
-
+    By email2Field = By.cssSelector("[placeholder=\"Email\"]");
+    By email3Field = By.cssSelector("[placeholder=\"Email\"]");
     //before
 
     @BeforeClass
