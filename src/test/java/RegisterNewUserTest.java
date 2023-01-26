@@ -20,19 +20,25 @@ public class RegisterNewUserTest extends TestBase {
 
     @Test
     public void registerNewUser() throws InterruptedException {
+        // подготовка
         String userData = faker.internet().emailAddress();
         String password = faker.internet().password();
         String expectedErrorMessage = "noErrorMsg";
+        String err = "Actual error message is not equal expected"; //Это текст сообщения, которое будет выдаваться, если тест упал (нужно для удобства анализа ошибок)
+        // сам тест Act
         driver.findElement(loginForm).isDisplayed();
         driver.findElement(userRegistrationLink).click();
         driver.findElement(registrationForm).isDisplayed();
+
         fillField(userData, emailField);
         fillField(password, passwordField);
         fillField(password, confirmPasswordField);
+
         //driver.findElement(By.cssSelector("confirm-password")).sendKeys(userData);
         driver.findElement(loginButton).click();
         String actualErrorMessage = driver.findElement(errorMessageBlock).getText();
-        Assert.assertEquals(actualErrorMessage, expectedErrorMessage);
+        // Assert (проверка)
+        Assert.assertEquals(actualErrorMessage, expectedErrorMessage, err); //message (err) - то, что будет выводиться в консоли, если ошибка (текст пишем сами)
 
         //driver.findElement(By.name("email"));
         //driver.findElement(By.cssSelector("[placeholder=\"Password\"]"));
