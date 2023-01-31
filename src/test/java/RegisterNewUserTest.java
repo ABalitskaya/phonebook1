@@ -4,8 +4,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class RegisterNewUserTest extends TestBase {
-
-
     By loginForm = By.id("login-form");
     By userRegistrationLink = By.cssSelector("[href=\"/user/registration\"]");
     By registrationForm = By.id("registration-form");
@@ -13,38 +11,90 @@ public class RegisterNewUserTest extends TestBase {
     By passwordField = By.cssSelector("[placeholder=\"Password\"]");
     By confirmPasswordField = By.cssSelector("[ng-reflect-name=\"confirm_password\"]");
     By loginButton = By.xpath("//*[@type=\"submit\"]");
-
     By errorMessageBlock = By.id("error-message");
+    By errorEmailMessageBlock = By.id("email-error-invalid");
+    By errorPasswordMaxLengthMessageBlock = By.id("password-error-maxlength");
     Faker faker = new Faker();
 
-
-    @Test
-    public void registerNewUser() throws InterruptedException {
-        // подготовка
-        String userData = faker.internet().emailAddress();
-        String password = faker.internet().password();
-        String expectedErrorMessage = "noErrorMsg";
-        String err = "Actual error message is not equal expected"; //Это текст сообщения, которое будет выдаваться, если тест упал (нужно для удобства анализа ошибок)
-        // сам тест Act
-        driver.findElement(loginForm).isDisplayed();
-        driver.findElement(userRegistrationLink).click();
-        driver.findElement(registrationForm).isDisplayed();
-
+    private void fillRegistrationForm(String userData, String password) {
         fillField(userData, emailField);
         fillField(password, passwordField);
         fillField(password, confirmPasswordField);
+    }
 
-        //driver.findElement(By.cssSelector("confirm-password")).sendKeys(userData);
-        driver.findElement(loginButton).click();
+    private void checkErrorMessage(By locator, String expectedErrorMessage) {
+        String actualErrorMessage = driver.findElement(locator).getText();
+        String err = "Actual error message is not equal expected";
+        Assert.assertEquals(actualErrorMessage, expectedErrorMessage, err);
+    }
+
+    private void goToRegistrationPage() {
+        Assert.assertTrue(isElementPresent(loginForm));
+        driver.findElement(userRegistrationLink).click();
+        Assert.assertTrue(isElementPresent(registrationForm));
+    }
+
+    //Positive
+    @Test
+    public void registerNewUserWithValidData() {
+        //Arrange
+        String userData = faker.internet().emailAddress();
+        String password = faker.internet().password();
+        String expectedErrorMessage = "noErrorMsg";
+        //Act
+        goToRegistrationPage();
+        fillField(userData, emailField);
+        fillField(password, passwordField);
+        fillField(password, confirmPasswordField);
+        clickSignUpButton();
         String actualErrorMessage = driver.findElement(errorMessageBlock).getText();
-        // Assert (проверка)
-        Assert.assertEquals(actualErrorMessage, expectedErrorMessage, err); //message (err) - то, что будет выводиться в консоли, если ошибка (текст пишем сами)
+        //Assert
+        String err = "Actual error message is not equal expected";
+        Assert.assertEquals(actualErrorMessage, expectedErrorMessage, err);
+    }
 
-        //driver.findElement(By.name("email"));
-        //driver.findElement(By.cssSelector("[placeholder=\"Password\"]"));
-        //driver.findElement(By.name("confirm-password"));
-        //driver.findElement(By.xpath("//button[normalize-space()='Sign up']"));
+    private void clickSignUpButton() {
+        driver.findElement(loginButton).click();
+        driver.findElement(loginButton).isEnabled();
+    }
+
+    //Negative
+    @Test
+    public void registerNewUserWithInvalidData() {
+        //Arrange
+        String userData = faker.internet().password();
+        String password = faker.internet().emailAddress();
+        String expectedEmailErrorMessage = "Email must be a valid email address.";
+        String expectedPasswordErrorMessage = "Password must be no longer than 20 characters.";
+
+        //Act
+        goToRegistrationPage();
+        fillRegistrationForm(userData, password);
+        Assert.assertFalse(isElementPresent(errorMessageBlock));
+        String actualEmailErrorMessage = driver.findElement(errorEmailMessageBlock).getText();
+        String actualPasswordMaxLengthMessageBlock = driver.findElement(errorPasswordMaxLengthMessageBlock).getText();
+        //Assert
+        checkErrorMessage(errorEmailMessageBlock, expectedEmailErrorMessage);
+        checkErrorMessage(errorPasswordMaxLengthMessageBlock, expectedPasswordErrorMessage);
+
     }
 
 
+    //Negative
+    @Test
+    public void registerExistingUser() {
+        //Arrange
+        String userData = "test@gmail.com";
+        String password = "test@gmail.com";
+        String expectedErrorMessage = "Error! User already exists Login now?";
+        //Act
+        goToRegistrationPage();
+        fillField(userData, emailField);
+        fillField(password, passwordField);
+        fillField(password, confirmPasswordField);
+        driver.findElement(loginButton).click();
+        clickSignUpButton();
+        //Assert
+        checkErrorMessage(errorMessageBlock, expectedErrorMessage);
+    }
 }

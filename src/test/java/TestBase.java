@@ -6,6 +6,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
+import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
 public class TestBase {
@@ -31,12 +32,33 @@ public class TestBase {
         driver.findElement(locator).sendKeys(userData);
     }
 
+    public boolean isElementPresent(By by) {
+        try {
+            driver.findElement(by);
+            return true;
+        } catch (NoSuchElementException exception) {
+            exception.printStackTrace();
+            return false;
+        }
+    }
+
+
     @AfterMethod
     public void tearDown() throws InterruptedException {
         Thread.sleep(1000); //Ожидание 1000милисекунд (ничего не будет делать)
         if (driver != null) {
             driver.quit(); // закроет браузер
             //driver.close(); закроет вкладку
+        }
+    }
+
+    public boolean isElementClickable(By by) {
+        try {
+            driver.findElement(by).click();
+            return true;
+        } catch (NoSuchElementException exception) {
+            exception.printStackTrace();
+            return false;
         }
     }
 }
