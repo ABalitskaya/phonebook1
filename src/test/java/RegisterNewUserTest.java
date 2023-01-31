@@ -97,4 +97,6 @@ public class RegisterNewUserTest extends TestBase {
         //Assert
         checkErrorMessage(errorMessageBlock, expectedErrorMessage);
     }
+
+
 }
