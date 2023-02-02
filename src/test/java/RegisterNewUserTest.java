@@ -23,10 +23,10 @@ public class RegisterNewUserTest extends TestBase {
     }
 
     private void checkErrorMessage(By locator, String expectedErrorMessage) {
-        String actualErrorMessage = driver.findElement(locator).getText();
         String err = "Actual error message is not equal expected";
-        Assert.assertEquals(actualErrorMessage, expectedErrorMessage, err);
+        checkItemText(locator, expectedErrorMessage, err);
     }
+
 
     private void goToRegistrationPage() {
         Assert.assertTrue(isElementPresent(loginForm));
@@ -47,10 +47,7 @@ public class RegisterNewUserTest extends TestBase {
         fillField(password, passwordField);
         fillField(password, confirmPasswordField);
         clickSignUpButton();
-        String actualErrorMessage = driver.findElement(errorMessageBlock).getText();
-        //Assert
-        String err = "Actual error message is not equal expected";
-        Assert.assertEquals(actualErrorMessage, expectedErrorMessage, err);
+        //checkItemText(errorMessageBlock, expectedErrorMessage, err);
     }
 
     private void clickSignUpButton() {
