@@ -3,6 +3,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -14,9 +16,16 @@ public class TestBase {
 
     WebDriver driver;
 
+    public static Logger logger() {
+        return LoggerFactory.getLogger(TestBase.class);
+
+    }
+
+
     @BeforeClass
     public static void setUp() {
         WebDriverManager.chromedriver().setup(); //Драйверы для хрома (можно для любого браузера
+        logger().info("Setup chrome driver");
     }
 
     @BeforeMethod
@@ -26,6 +35,7 @@ public class TestBase {
         //driver.navigate().to("https://www.google.ru/");
         driver.manage().window().maximize(); //установка размера экрана
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); //выставили 10 секунд для этого шага (возможный максимум)
+        logger().info("Start test");
     }
 
     public void fillField(String userData, By locator) {
@@ -57,6 +67,8 @@ public class TestBase {
             driver.quit(); // закроет браузер
             //driver.close(); закроет вкладку
         }
+        logger().info("Stop test");
+
     }
 
     public boolean isElementClickable(By by) {

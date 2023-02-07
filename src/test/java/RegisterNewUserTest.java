@@ -38,6 +38,7 @@ public class RegisterNewUserTest extends TestBase {
     @Test
     public void registerNewUserWithValidData() {
         //Arrange
+
         String userData = faker.internet().emailAddress();
         String password = faker.internet().password();
         String expectedErrorMessage = "noErrorMsg";
@@ -48,6 +49,7 @@ public class RegisterNewUserTest extends TestBase {
         fillField(password, confirmPasswordField);
         clickSignUpButton();
         //checkItemText(errorMessageBlock, expectedErrorMessage, err);
+
     }
 
     private void clickSignUpButton() {
@@ -80,6 +82,8 @@ public class RegisterNewUserTest extends TestBase {
     //Negative
     @Test
     public void registerExistingUser() {
+
+
         //Arrange
         String userData = "test@gmail.com";
         String password = "test@gmail.com";
@@ -93,6 +97,7 @@ public class RegisterNewUserTest extends TestBase {
         clickSignUpButton();
         //Assert
         checkErrorMessage(errorMessageBlock, expectedErrorMessage);
+
     }
 
 
