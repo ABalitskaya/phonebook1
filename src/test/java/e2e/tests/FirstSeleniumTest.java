@@ -1,3 +1,5 @@
+package e2e.tests;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -39,7 +41,7 @@ public class FirstSeleniumTest {
     public void locators() {
         driver.findElement(By.name("email")).sendKeys("1,2,3");
         driver.findElement(By.cssSelector("[placeholder=\"Password\"]")).sendKeys("1,2,3");
-        //driver.findElement(By.xpath("//button[contains(text(), 'Login')]")).click();
+        //driver.findElement(By.xpath("//button[contains(text(), 'e2e.helpers.Login')]")).click();
         driver.findElement(By.cssSelector(".btn.btn-info"));
     }
 

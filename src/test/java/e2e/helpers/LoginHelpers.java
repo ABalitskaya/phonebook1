@@ -1,7 +1,9 @@
+package e2e.helpers;
+
 import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 
-public class Login extends TestBase {
+public class LoginHelpers extends CommonHelpers {
     @BeforeMethod
     public void login() {
         By loginForm = By.id("login-form");

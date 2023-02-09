@@ -1,4 +1,7 @@
+package e2e.tests;
+
 import com.github.javafaker.Faker;
+import e2e.helpers.MainHelpers;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -9,7 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 
 
-public class CreateContactTest extends ChangeLanguage {
+public class OldCreateContactTest extends MainHelpers {
 
     Faker faker = new Faker();
 
@@ -27,6 +30,12 @@ public class CreateContactTest extends ChangeLanguage {
         });
         return list.iterator();
     }
+    /*
+    static By contactButton = By.cssSelector("[href=\"/contacts\"]");
+    By dialogWindow = By.xpath("//*[@role='dialog']");
+    By newContactFirstName = By.id("form-name");
+    By newContactLastName = By.id("form-lastName");
+    By newContactDescription = By.xpath("//*[@role.......")*/
 
     private void openAddNewContact() {
         driver.findElement(By.cssSelector("[href=\"/contacts\"]")).click();

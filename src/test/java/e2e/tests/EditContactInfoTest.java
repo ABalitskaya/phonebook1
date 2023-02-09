@@ -1,7 +1,10 @@
+package e2e.tests;
+
+import e2e.helpers.LoginHelpers;
 import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 
-public class EditContactInfo extends Login {
+public class EditContactInfoTest extends LoginHelpers {
 
     By searchField = By.id("input-search-contact");
     By myCreatedContact = By.cssSelector("div[class='d-flex justify-content-between'] b");
