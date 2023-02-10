@@ -16,17 +16,6 @@ public class RegisterHelpers extends CommonHelpers {
     public By errorEmailMessageBlock = By.id("email-error-invalid");
     public By errorPasswordMaxLengthMessageBlock = By.id("password-error-maxlength");
 
-    public void fillRegistrationForm(String userData, String password) {
-        fillField(userData, emailField);
-        fillField(password, passwordField);
-        fillField(password, confirmPasswordField);
-    }
-
-    public void checkErrorMessage(By locator, String expectedErrorMessage) {
-        String err = "Actual error message is not equal expected";
-        checkItemText(locator, expectedErrorMessage, err);
-    }
-
 
     public void goToRegistrationPage() {
         Assert.assertTrue(isElementPresent(loginForm));
@@ -34,9 +23,21 @@ public class RegisterHelpers extends CommonHelpers {
         Assert.assertTrue(isElementPresent(registrationForm));
     }
 
+    public void fillRegistrationForm(String userData, String password) {
+        fillField(userData, emailField);
+        fillField(password, passwordField);
+        fillField(password, confirmPasswordField);
+    }
+
     public void clickSignUpButton() {
         driver.findElement(loginButton).click();
         driver.findElement(loginButton).isEnabled();
     }
+
+    public void checkErrorMessage(By locator, String expectedErrorMessage) {
+        String err = "Actual error message is not equal expected";
+        checkItemText(locator, expectedErrorMessage, err);
+    }
+
 
 }

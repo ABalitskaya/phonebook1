@@ -16,17 +16,15 @@ public class RegisterNewUserTest extends CommonHelpers {
     @Test
     public void registerNewUserWithValidData() {
         //Arrange
-
         String userData = faker.internet().emailAddress();
         String password = faker.internet().password();
         String expectedErrorMessage = "noErrorMsg";
         //Act
         registerHelpers.goToRegistrationPage();
         registerHelpers.fillRegistrationForm(userData, password);
-
         registerHelpers.clickSignUpButton();
-        //checkItemText(errorMessageBlock, expectedErrorMessage, err);
-
+        //Assert
+        registerHelpers.checkErrorMessage(registerHelpers.errorMessageBlock, expectedErrorMessage);
     }
 
 
@@ -43,34 +41,24 @@ public class RegisterNewUserTest extends CommonHelpers {
         registerHelpers.goToRegistrationPage();
         registerHelpers.fillRegistrationForm(userData, password);
         Assert.assertFalse(isElementPresent(registerHelpers.errorMessageBlock));
-        String actualEmailErrorMessage = driver.findElement(registerHelpers.errorEmailMessageBlock).getText();
-        String actualPasswordMaxLengthMessageBlock = driver.findElement(registerHelpers.errorPasswordMaxLengthMessageBlock).getText();
         //Assert
         registerHelpers.checkErrorMessage(registerHelpers.errorEmailMessageBlock, expectedEmailErrorMessage);
         registerHelpers.checkErrorMessage(registerHelpers.errorPasswordMaxLengthMessageBlock, expectedPasswordErrorMessage);
-
     }
 
-
     //Negative
-   /* @Test
+    @Test
     public void registerExistingUser() {
-
         //Arrange
         String userData = "test@gmail.com";
         String password = "test@gmail.com";
         String expectedErrorMessage = "Error! User already exists e2e.helpers.Login now?";
         //Act
         registerHelpers.goToRegistrationPage();
-        registerHelpers.fillField(userData, emailField);
-        registerHelpers.fillField(password, passwordField);
-        registerHelpers.fillField(password, confirmPasswordField);
-        driver.findElement(loginButton).click();
+        registerHelpers.fillRegistrationForm(userData, password);
         registerHelpers.clickSignUpButton();
         //Assert
         registerHelpers.checkErrorMessage(registerHelpers.errorMessageBlock, expectedErrorMessage);
-
-    }*/
-
+    }
 
 }

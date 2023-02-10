@@ -23,10 +23,7 @@ public class TestBase {
 
     public WebDriver driver;
 
-    public static Logger logger() {
-        return LoggerFactory.getLogger(TestBase.class);
-
-    }
+    static Logger logger = LoggerFactory.getLogger(TestBase.class);
 
 
     @BeforeClass
@@ -35,15 +32,6 @@ public class TestBase {
         logger().info("Setup chrome driver");
     }
 
-    /* @BeforeMethod
-     public void setupTest() {
-         driver = new ChromeDriver(); //выбор браузера
-         driver.get("http://phonebook.telran-edu.de:8080/contacts"); //браузер открывает урл
-         //driver.navigate().to("https://www.google.ru/");
-         driver.manage().window().maximize(); //установка размера экрана
-         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); //выставили 10 секунд для этого шага (возможный максимум)
-         logger().info("Start test");
-     }*/
     @BeforeMethod
     public void setupTest(Method m, Object[] p) {
         driver = new ChromeDriver();
@@ -60,20 +48,6 @@ public class TestBase {
         Files.copy(tmp, screenshot);
         return screenshot.getAbsolutePath();
     }
-
-
-
-
-    /*@AfterMethod
-    public void tearDown() throws InterruptedException {
-        Thread.sleep(1000); //Ожидание 1000милисекунд (ничего не будет делать)
-        if (driver != null) {
-            driver.quit(); // закроет браузер
-            //driver.close(); закроет вкладку
-        }
-        logger().info("Stop test");
-
-    }*/
 
     @AfterMethod
     public void tearDown() {

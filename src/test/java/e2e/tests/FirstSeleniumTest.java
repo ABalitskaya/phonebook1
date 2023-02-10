@@ -15,9 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class FirstSeleniumTest {
     WebDriver driver;
     By emailField = By.cssSelector("[placeholder=\"Email\"]");
-    By email2Field = By.cssSelector("[placeholder=\"Email\"]");
-    By email3Field = By.cssSelector("[placeholder=\"Email\"]");
-    By email4Field = By.cssSelector("[placeholder=\"Email\"]");
+
     //before
 
     @BeforeClass
@@ -39,33 +37,36 @@ public class FirstSeleniumTest {
     //test
     @Test
     public void locators() {
-        driver.findElement(By.name("email")).sendKeys("1,2,3");
-        driver.findElement(By.cssSelector("[placeholder=\"Password\"]")).sendKeys("1,2,3");
-        //driver.findElement(By.xpath("//button[contains(text(), 'e2e.helpers.Login')]")).click();
-        driver.findElement(By.cssSelector(".btn.btn-info"));
+        driver.findElement(By.name("email")).sendKeys("test@gmail.com");
+        driver.findElement(By.cssSelector("[placeholder=\"Password\"]")).sendKeys("test@gmail.com");
+//        driver.findElement(By.name("password")).sendKeys("test@gmail.com");
+        driver.findElement(By.cssSelector("/"));
+
+        driver.findElement(By.id("firstname"));
+        driver.findElement(By.cssSelector("#firstname input"));
+
+        driver.findElement(By.tagName("p"));
+        driver.findElement(By.cssSelector("p"));
+        driver.findElement(By.xpath("//*[@id=\"registration-form\"]/div[1]/div[1]/div/input"));
     }
 
+
     @Test
-    public void registerNewUser() throws InterruptedException {
+    public void registerNewUser() {
         String userData = "test3@gmail.com";
+
         driver.findElement(By.id("login-form")).isDisplayed();
         driver.findElement(By.cssSelector("[href=\"/user/registration\"]")).click();
         driver.findElement(By.id("registration-form")).isDisplayed();
         fillField(userData, emailField);
         fillField(userData, By.cssSelector("[placeholder=\"Password\"]"));
         fillField(userData, By.cssSelector("[ng-reflect-name=\"confirm_password\"]"));
-        //driver.findElement(By.cssSelector("confirm-password")).sendKeys(userData);
         driver.findElement(By.xpath("//*[@type=\"submit\"]")).click();
-
-        //driver.findElement(By.name("email"));
-        //driver.findElement(By.cssSelector("[placeholder=\"Password\"]"));
-        //driver.findElement(By.name("confirm-password"));
-        //driver.findElement(By.xpath("//button[normalize-space()='Sign up']"));
     }
 
-    private void fillField(String userData, By cssSelector) {
-        driver.findElement(cssSelector).click();
-        driver.findElement(cssSelector).sendKeys(userData);
+    private void fillField(String userData, By locator) {
+        driver.findElement(locator).click();
+        driver.findElement(locator).sendKeys(userData);
     }
 
     //after

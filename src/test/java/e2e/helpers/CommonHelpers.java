@@ -21,12 +21,6 @@ public class CommonHelpers extends TestBase {
         }
     }
 
-    public void checkItemText(By locator, String expectedText, String err) {
-        String actualText = driver.findElement(locator).getText();
-
-        Assert.assertEquals(actualText, expectedText, err);
-    }
-
     public boolean isElementClickable(By by) {
         try {
             driver.findElement(by).click();
@@ -37,5 +31,10 @@ public class CommonHelpers extends TestBase {
         }
     }
 
+    public void checkItemText(By locator, String expectedText, String err) {
+        String actualText = driver.findElement(locator).getText();
+
+        Assert.assertEquals(actualText, expectedText, err);
+    }
 
 }

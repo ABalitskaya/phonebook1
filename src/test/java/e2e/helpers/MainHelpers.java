@@ -10,6 +10,4 @@ public class MainHelpers extends LoginHelpers {
         driver.findElement(By.cssSelector("[value='en']")).isDisplayed();
         driver.findElement(By.cssSelector("[value='en']")).click();
     }
-
-
 }
