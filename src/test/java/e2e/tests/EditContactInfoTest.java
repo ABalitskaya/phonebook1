@@ -1,38 +1,23 @@
 package e2e.tests;
 
-import e2e.helpers.LoginHelpers;
-import org.openqa.selenium.By;
+import e2e.TestBase;
+import e2e.utils.DataProviders;
 import org.testng.annotations.Test;
 
-public class EditContactInfoTest extends LoginHelpers {
+public class EditContactInfoTest extends TestBase {
+    @Test(dataProvider = "changeLastNameAndDescription", dataProviderClass = DataProviders.class)
+    public void editContactInfo(String lastName, String description) {
+        String firstName = "4b6ae712-71b9-44a1-a1ed-070b90ab6c8e";
 
-    By searchField = By.id("input-search-contact");
-    By myCreatedContact = By.cssSelector("div[class='d-flex justify-content-between'] b");
-    By editButton = By.id("btn-edit-contact");
-
-    By descriptionField = By.name("input-ec-description");
-
-    By buttonSave = By.cssSelector("button[class='btn btn-primary submit-btn-ec']");
-
-
-    @Test
-    public void editContactInformation() {
-        String contactFirstName = "Alexandra";
-        String contactLastName = "Balitskaya";
-        String firstAndLastName = contactFirstName + contactLastName;
-        driver.findElement(searchField).sendKeys(firstAndLastName);
-        driver.findElement(myCreatedContact).click();
-        driver.findElement(editButton).click();
-        driver.findElement(descriptionField).click();
-        String firstPartOfExpectedDescription = driver.findElement(descriptionField).getText();
-
-        String newDescription = "Updated description for test";
-        fillField(newDescription, descriptionField);
-        driver.findElement(buttonSave).click();
-
-        String actualTextOfDescription = driver.findElement(descriptionField).getText();
-        String expectedTextOfDescription = firstPartOfExpectedDescription + newDescription;
-        //Assert.assertEquals(expectedTextOfDescription, actualTextOfDescription);
+        app.getLogin().login();
+        app.getEditeContact().changeLanguage();
+        app.getEditeContact().goToContactPageAndFillFilterField(firstName);
+        app.getEditeContact().checkCountRows(1);
+        app.getEditeContact().openContact();
+        app.getEditeContact().openEditForm();
+        app.getEditeContact().editeLastNameAndDescription(lastName, description);
+        app.getEditeContact().saveEditedContact();
+        app.getEditeContact().checkFieldsOnContactInfo(firstName, lastName, description);
 
     }
 }

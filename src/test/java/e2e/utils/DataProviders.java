@@ -33,4 +33,21 @@ public class DataProviders {
         }
         return list.iterator();
     }
+
+    @DataProvider
+    public Iterator<Object[]> editContactWithCSV() throws IOException {
+        List<Object[]> list = new ArrayList<>();
+        BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/DataForEditUserInfo - Лист1.csv")));
+        return list.iterator();
+    }
+
+    @DataProvider
+    public Iterator<Object[]> changeLastNameAndDescription() {
+        List<Object[]> list = new ArrayList<>();
+        list.add(new Object[]{"Kelbas", "Best A"});
+        list.add(new Object[]{"Sherif", "Best AAA"});
+        list.add(new Object[]{"Golof", "Best B"});
+        return list.iterator();
+    }
+
 }
