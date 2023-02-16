@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 public class OldEditContactInfoTest extends TestBase {
 
     @Test(dataProvider = "changeLastNameAndDescription", dataProviderClass = DataProviders.class)
-    public void changeEditContactInfo(String lastName, String description) {
+    public void changeEditContactInfo(String lastName, String description) throws InterruptedException {
         String firstName = "Sasha2";
         Number expectedCountRow = 1;
         app.getLogin().login();

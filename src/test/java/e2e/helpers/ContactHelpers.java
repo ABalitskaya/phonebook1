@@ -2,6 +2,7 @@ package e2e.helpers;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
 public class ContactHelpers extends CommonHelpers {
@@ -35,11 +36,25 @@ public class ContactHelpers extends CommonHelpers {
         clickOnVisibleElement(By.xpath("//*[@id='contacts-list']//*[@class='list-group']"));
     }
 
-    public void checkFieldsOnContactInfo(String firstName, String lastName, String description) {
-        checkItemText(By.id("contact-first-name"), firstName, "Actual first name is not equal expected first name");
-        checkItemText(By.id("contact-last-name"), lastName, "Actual last name is not equal expected last name");
-        checkItemText(By.id("contact-description"), description, "Actual description is not equal expected description");
+    public void openRemoveContactDialog() {
+        openDialog(By.xpath("//*[@id='contacts-list']//*[@class='list-group-item']/img"));
     }
+
+    public void removeContact() {
+        clickOnVisibleElement(By.id("check-box-remove-contact"));
+        clickOnVisibleElement(By.id("submit-remove"));
+        setWait().until(ExpectedConditions.invisibilityOfElementLocated
+                (By.xpath("//*[@role='dialog']")));
+    }
+
+
+    public void checkFieldsOnContactInfo(String firstName, String lastName, String description) throws InterruptedException {
+        Thread.sleep(1000);
+        checkItemText(By.xpath("//*[@id='edit-contact-form']//*[@id='contact-first-name']"), firstName, "Actual first name is not equal expected first name");
+        checkItemText(By.xpath("//*[@id='edit-contact-form']//*[@id='contact-last-name']"), lastName, "Actual last name is not equal expected last name");
+        checkItemText(By.xpath("//*[@id='edit-contact-form']//*[@id='contact-description']"), description, "Actual description is not equal expected description");
+    }
+
 
     public void checkCountRows(Number expectedCountRow) {
         Number actualCountRow = driver.findElements(By.xpath("//*[@id='contacts-list']//*[@class='list-group']")).size();

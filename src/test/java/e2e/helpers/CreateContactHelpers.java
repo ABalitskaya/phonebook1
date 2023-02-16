@@ -2,7 +2,7 @@ package e2e.helpers;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class CreateContactHelpers extends ContactHelpers {
     public CreateContactHelpers(WebDriver driver) {
@@ -10,8 +10,7 @@ public class CreateContactHelpers extends ContactHelpers {
     }
 
     public void openAddNewContactDialog() {
-        driver.findElement(By.cssSelector("[href='/contacts']")).click();
-        Assert.assertTrue(isElementPresent(By.xpath("//*[@role='dialog']")));
+        openDialog(By.cssSelector("[href='/contacts']"));
     }
 
     public void fillAddNewContactForm(String firstName, String lastName, String description) {
@@ -21,9 +20,9 @@ public class CreateContactHelpers extends ContactHelpers {
     }
 
     public void saveNewContact() throws InterruptedException {
-        driver.findElement(By.xpath("//button[@class='btn btn-primary']")).click();
-        Thread.sleep(1000);
-        Assert.assertFalse(isElementPresent(By.xpath("//*[@role='dialog']")));
+        clickOnVisibleElement(By.xpath("//button[@class='btn btn-primary']"));
+        setWait().until(ExpectedConditions.invisibilityOfElementLocated
+                (By.xpath("//*[@role='dialog']")));
     }
 
 }

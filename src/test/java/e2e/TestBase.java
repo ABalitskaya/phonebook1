@@ -42,5 +42,9 @@ public class TestBase {
             app.driver.quit();
         }
     }
+    /*protected void stop() {
+        driver.quit();
+    }*/
+
 
 }

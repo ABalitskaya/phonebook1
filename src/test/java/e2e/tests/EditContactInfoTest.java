@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 
 public class EditContactInfoTest extends TestBase {
     @Test(dataProvider = "changeLastNameAndDescription", dataProviderClass = DataProviders.class)
-    public void editContactInfo(String lastName, String description) {
+    public void editContactInfo(String lastName, String description) throws InterruptedException {
         String firstName = "4b6ae712-71b9-44a1-a1ed-070b90ab6c8e";
 
         app.getLogin().login();

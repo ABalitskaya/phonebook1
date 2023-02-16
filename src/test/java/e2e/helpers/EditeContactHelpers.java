@@ -17,6 +17,11 @@ public class EditeContactHelpers extends ContactHelpers {
         fillField(description, By.cssSelector("[name='input-ec-description']"));
     }
 
+    public void editContactInfoForm(String firstName, String lastName, String description) {
+        fillField(firstName, (By.name("input-ec-firstName")));
+        editeLastNameAndDescription(lastName, description);
+    }
+
     public void saveEditedContact() {
         clickOnVisibleElement(By.xpath("//*[@class='col-sm-3']//*[@type='submit']"));
     }
