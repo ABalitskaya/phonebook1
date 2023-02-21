@@ -5,6 +5,9 @@ import e2e.TestBase;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.awt.*;
+import java.io.IOException;
+
 public class RegisterNewUserTest extends TestBase {
 
     Faker faker = new Faker();
@@ -27,7 +30,7 @@ public class RegisterNewUserTest extends TestBase {
 
     //Negative
     @Test
-    public void registerNewUserWithInvalidData() {
+    public void registerNewUserWithInvalidData() throws IOException, AWTException {
         //Arrange
         String userData = faker.internet().password();
         String password = faker.internet().emailAddress();
@@ -35,12 +38,14 @@ public class RegisterNewUserTest extends TestBase {
         String expectedPasswordErrorMessage = "Password must be no longer than 20 characters.";
 
         //Act
+        app.getRegister().startRecording();
         app.getRegister().goToRegistrationPage();
         app.getRegister().fillRegistrationForm(userData, password);
         Assert.assertFalse(app.getRegister().isElementPresent(app.getRegister().errorMessageBlock));
         //Assert
         app.getRegister().checkErrorMessage(app.getRegister().errorEmailMessageBlock, expectedEmailErrorMessage);
         app.getRegister().checkErrorMessage(app.getRegister().errorPasswordMaxLengthMessageBlock, expectedPasswordErrorMessage);
+        app.getRegister().stopRecording();
     }
 
     //Negative
@@ -49,7 +54,7 @@ public class RegisterNewUserTest extends TestBase {
         //Arrange
         String userData = "test@gmail.com";
         String password = "test@gmail.com";
-        String expectedErrorMessage = "Error! User already exists e2e.helpers.Login now?";
+        String expectedErrorMessage = "Error! User already exists Login now?";
         //Act
         app.getRegister().goToRegistrationPage();
         app.getRegister().fillRegistrationForm(userData, password);
