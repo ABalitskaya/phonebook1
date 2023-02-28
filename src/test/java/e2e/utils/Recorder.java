@@ -19,14 +19,15 @@ public class Recorder extends ScreenRecorder {
 
     @Override
     protected File createMovieFile(Format fileFormat) throws IOException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH.mm");
-        return new File(movieFolder, name + "_" + dateFormat.format(new Date() + "." + Registry.getInstance().getExtension(fileFormat)));
-        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH.mm");
+        return new File(movieFolder, name + "_" + dateFormat.format(new Date()) + "." + Registry.getInstance().getExtension(fileFormat));
+
     }
 
     private String name;
 
     public Recorder(GraphicsConfiguration cfg, Rectangle captureArea, Format fileFormat, Format screenFormat, Format mouseFormat, Format audioFormat, File movieFolder, String name) throws IOException, AWTException {
         super(cfg, captureArea, fileFormat, screenFormat, mouseFormat, audioFormat, movieFolder);
+        this.name = name;
     }
 }

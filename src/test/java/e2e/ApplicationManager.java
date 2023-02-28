@@ -5,6 +5,7 @@ import e2e.helpers.CreateContactHelpers;
 import e2e.helpers.EditeContactHelpers;
 import e2e.helpers.LoginHelpers;
 import e2e.helpers.RegisterHelpers;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -15,6 +16,8 @@ import org.testng.annotations.AfterMethod;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+
+import static e2e.TestBase.logger;
 
 public class ApplicationManager {
 
@@ -44,6 +47,7 @@ public class ApplicationManager {
 
 
     protected void init() {
+        WebDriverManager.chromedriver().setup(); //Драйверы для хрома (можно для любого браузера
         driver = new ChromeDriver();
         driver.get("http://phonebook.telran-edu.de:8080/");
         driver.manage().window().maximize();
@@ -66,11 +70,11 @@ public class ApplicationManager {
     @AfterMethod
     public void stopTest(ITestResult result) throws IOException {
         if (result.isSuccess()) {
-            TestBase.logger.info("PASSED" + result.getMethod().getMethodName());
+            logger.info("PASSED" + result.getMethod().getMethodName());
         } else {
-            TestBase.logger.info("FAILED" + result.getMethod().getMethodName() + "Screenshot path: " + takeScreenshot());
+            logger.info("FAILED" + result.getMethod().getMethodName() + "Screenshot path: " + takeScreenshot());
         }
-        TestBase.logger.info("=========================================================================");
+        logger.info("=========================================================================");
 
     }
 }
