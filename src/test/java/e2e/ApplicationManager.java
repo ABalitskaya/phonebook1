@@ -9,7 +9,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestResult;
@@ -66,11 +66,10 @@ public class ApplicationManager {
             driver = remoteDriverSelenoid();
             System.out.println("Using remote driver(Selenoid)");
         } else {
-            WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
+            WebDriverManager.firefoxdriver().setup();
+            driver = new FirefoxDriver();
             System.out.println("Using local Chromedriver");
         }
-
 
         //driver = remoteDriverSelenoid();
 
